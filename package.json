@@ -1,0 +1,24 @@
+{
+  "name": "sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "dependencies": {
+    "fastify": "^3.14.2",
+    "fastify-cors": "^6.0.1",
+    "fastify-mongodb": "^2.0.1",
+    "fastify-plugin": "^3.0.0",
+    "fastify-static": "^4.0.1",
+    "mongoose": "^5.12.5",
+    "path": "^0.12.7",
+    "socket.io": "^4.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
