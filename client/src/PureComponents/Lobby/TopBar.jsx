@@ -15,7 +15,7 @@ const Box = styled.div`
     
     color: white;
     font-weight: 800;
-    font-size: 6rem;
+    font-size: 5.3rem;
     
     // box-shadow: 0 1px 2px rgba(0,0,0,0.07), 
     // 0 2px 4px rgba(0,0,0,0.07), 

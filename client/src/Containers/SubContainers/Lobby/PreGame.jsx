@@ -1,52 +1,76 @@
-import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useUserStore } from '../../../Contexts/User'
+// import { useUserStore } from '../../../Contexts/User'
 
-const postLobby = async (username) => {
-    const res = await fetch('http://127.0.0.1:3001/api/lobbys', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-        body: JSON.stringify({ username }),
-    })
-    return await res.json()
-}
+import useFetchLobby from '../../../Hooks/useFetchLobby'
 
-const putLobby = async (username, id) => {
-    const res = await fetch(`http://127.0.0.1:3001/api/lobbys/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-        body: JSON.stringify({ username }),
-    })
-    return await res.json()
-}
+import Container from '../../../PureComponents/Lobby/Body/PreGame/Container'
+import Waitings from '../../../PureComponents/Lobby/Body/PreGame/Waitings'
+import Username from '../../../PureComponents/Lobby/Body/PreGame/Username'
+import HorizontalBar from '../../../PureComponents/Lobby/Body/PreGame/HorizontalBar'
+import Cards from '../../../PureComponents/Lobby/Body/PreGame/Cards'
+import UpperCard from '../../../PureComponents/Lobby/Body/PreGame/UpperCard'
+import Card from '../../../PureComponents/Lobby/Body/PreGame/Card'
+import Flag from '../../../PureComponents/Lobby/Body/PreGame/Flag'
+import Teams from '../../../PureComponents/Lobby/Body/PreGame/Teams'
+import TextInput from '../../../PureComponents/Lobby/Body/PreGame/TextInput'
+import JoinBtn from '../../../PureComponents/Lobby/Body/PreGame/JoinBtn'
 
 const PreGame = () => {
     const { id } = useParams()
-    const { user, modifyUser } = useUserStore()
+    // const { user } = useUserStore()
 
-    useEffect(async () => {
-        try {
-            if (!id) {
-                const res = await postLobby(user.username)
-                return console.log(res)
+    useFetchLobby(id)
+
+    return <Container>
+        <Waitings>
+            {
+                ['JACKO', 'JANNOT', 'THELAPIN KILLEUR DU 7'].map(el => <Username>{el}</Username>)
             }
-            const res = await putLobby(user.username, id)
-            return console.log(res)
-        } catch (err) {
-            console.error(err)
-        }
-    }, [])
-
-    return <div>
-        user : 
-        zgeg :
-    </div>
+        </Waitings>
+            <HorizontalBar/>
+        <Cards>
+            <Card>
+                <UpperCard>
+                    <Flag/>
+                    <Teams>
+                        <JoinBtn/>
+                        <JoinBtn/>
+                    </Teams>
+                </UpperCard>
+                <TextInput text = "Nom de l'équipe"/>
+            </Card>
+            <Card>
+                <UpperCard>
+                    <Flag/>
+                    <Teams>
+                        <Username>Test</Username>
+                        <Username>Test</Username>
+                    </Teams>
+                </UpperCard>
+                <TextInput text = "Nom de l'équipe"/>
+            </Card>
+            <Card>
+                <UpperCard>
+                    <Flag/>
+                    <Teams>
+                        <Username>Test</Username>
+                        <Username>Test</Username>
+                    </Teams>
+                </UpperCard>
+                <TextInput text = "Nom de l'équipe"/>
+            </Card>
+            <Card>
+                <UpperCard>
+                    <Flag/>
+                    <Teams>
+                        <Username>Test</Username>
+                        <Username>Test</Username>
+                    </Teams>
+                </UpperCard>
+                <TextInput text = "Nom de l'équipe"/>
+            </Card>
+        </Cards>
+    </Container>
 }
 
-export default PreGame
+export default PreGame 

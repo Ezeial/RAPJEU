@@ -1,4 +1,4 @@
-import Container from '../../../PureComponents/Lobby/Body/Container'
+import Container from '../../../PureComponents/Lobby/Body/Home/Container'
 import Button from '../../../PureComponents/Lobby/Body/Home/Button'
 import MiddleBar from '../../../PureComponents/Lobby/Body/Home/MiddleBar'
 

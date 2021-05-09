@@ -1,4 +1,4 @@
-import Container from '../../../PureComponents/Lobby/Body/Container'
+import Container from '../../../PureComponents/Lobby/Body/Auth/Container'
 
 import Box from '../../../PureComponents/Lobby/Body/Auth/Box'
 import TextInput from '../../../PureComponents/Lobby/Body/Auth/TextInput'
