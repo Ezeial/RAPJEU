@@ -7,7 +7,6 @@ const Box = styled.div`
     width: 55%;
     max-width: 800px;
     padding: 10px;
-    border: solid 1px white;
 `
 
 const Container = ({ children }) => <Box> { children } </Box>

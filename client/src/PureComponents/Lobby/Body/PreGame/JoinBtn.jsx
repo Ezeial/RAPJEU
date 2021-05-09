@@ -25,7 +25,7 @@ const Box = styled.div`
     color: white;
     margin: 8px;
     background-size: 200%;
-    animation: 4s ${Fade} linear infinite;
+    animation: 2s ${Fade} linear infinite;
 
     cursor: pointer;
     transition: all 1s ease;

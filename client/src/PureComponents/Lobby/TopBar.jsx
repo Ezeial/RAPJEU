@@ -1,10 +1,21 @@
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 
+const moveInTop = keyframes`
+    0% {
+        opacity: .2;
+        transform: translateY(-90px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+`
 const Box = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-
+    
     width: 100%;
 
     padding: 10px 0;
@@ -23,6 +34,8 @@ const Box = styled.div`
     // 0 8px 16px rgba(0,0,0,0.07),
     // 0 16px 32px rgba(0,0,0,0.07), 
     // 0 32px 64px rgba(0,0,0,0.07);
+
+    animation: ${moveInTop} 2s ease-out;
 `
 
 
