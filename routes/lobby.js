@@ -1,5 +1,3 @@
-import { randomBytes } from 'crypto'
-
 export default async (fastify, opts) => {
     fastify.decorate('model', fastify.db.schemas.lobbys)
 
@@ -12,14 +10,11 @@ export default async (fastify, opts) => {
     fastify.get('/', async (req, reply) => fastify.model.find({}))
 
     fastify.post('/', async (req, reply) => {
-        const roomId = randomBytes(2).toString('hex')
-        
-        const { username } = req.body
-        const newLobby = new fastify.model({ roomId, users: [{ username, team: 0 }], teams: [{ img: '', name: ''}, { img: '', name: ''}, { img: '', name: ''}, { img: '', name: ''}] })
-        const user = newLobby.users.find(user => user.username = username)
+        const { roomId } = req.body
+        const newLobby = new fastify.model({ roomId, users: [], teams: [{ img: '', name: ''}, { img: '', name: ''}, { img: '', name: ''}, { img: '', name: ''}] })
         try {   
             await newLobby.save()
-            return { newLobby, user }
+            reply.code(200).send('Empty lobby succesfully created')
         } catch (err) {
             return err
         }

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import ArrowSvg from '../../../../assets/arrow.svg'
+import ArrowSvg from '../../../assets/arrow.svg'
 
 const Container = styled.div`
     background: #0000006B;
