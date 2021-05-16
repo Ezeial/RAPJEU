@@ -1,7 +1,7 @@
+import { useEffect, useMemo } from 'react'
+import useSocket from '../../../Hooks/useSocket'
 import { useParams } from 'react-router-dom'
-// import { useUserStore } from '../../../Contexts/User'
-
-import useFetchLobby from '../../../Hooks/useFetchLobby'
+import { useGameStore } from '../../../Contexts/Game'
 
 import Container from '../../../PureComponents/Lobby/Body/PreGame/Container'
 import Waitings from '../../../PureComponents/Lobby/Body/PreGame/Waitings'
@@ -14,61 +14,59 @@ import Flag from '../../../PureComponents/Lobby/Body/PreGame/Flag'
 import Teams from '../../../PureComponents/Lobby/Body/PreGame/Teams'
 import TextInput from '../../../PureComponents/Lobby/Body/PreGame/TextInput'
 import JoinBtn from '../../../PureComponents/Lobby/Body/PreGame/JoinBtn'
+import TeamName from '../../../PureComponents/Lobby/Body/PreGame/TeamName'
 
 const PreGame = () => {
-    const { id } = useParams()
-    // const { user } = useUserStore()
+    const { lobby, user, dispatchLobby, modifyUser } = useGameStore()
+    const id = useParams()
+    const memoizedQuery = useMemo(() => ({ roomId: id, userId: user._id}), [id, user._id])
+    const socket = useSocket('lobby', memoizedQuery)
 
-    useFetchLobby(id)
+    useEffect(() => {
+        if (!socket) return
+    }, [socket])
 
+    if (Object.keys(lobby || user).length === 0 ) return <></>
+    
     return <Container>
         <Waitings>
             {
-                ['JACKO', 'JANNOT', 'THELAPIN KILLEUR DU 7'].map(el => <Username>{el}</Username>)
+                lobby.users.filter(u => u.team === 0).map((u, i) => <Username key = {i}>{u.username}</Username>)
             }
         </Waitings>
             <HorizontalBar/>
         <Cards>
-            <Card>
-                <UpperCard>
-                    <Flag/>
-                    <Teams>
-                        <JoinBtn/>
-                        <JoinBtn/>
-                    </Teams>
-                </UpperCard>
-                <TextInput text = "Nom de l'équipe"/>
-            </Card>
-            <Card>
-                <UpperCard>
-                    <Flag/>
-                    <Teams>
-                        <Username>Test</Username>
-                        <Username>Test</Username>
-                    </Teams>
-                </UpperCard>
-                <TextInput text = "Nom de l'équipe"/>
-            </Card>
-            <Card>
-                <UpperCard>
-                    <Flag/>
-                    <Teams>
-                        <Username>Test</Username>
-                        <Username>Test</Username>
-                    </Teams>
-                </UpperCard>
-                <TextInput text = "Nom de l'équipe"/>
-            </Card>
-            <Card>
-                <UpperCard>
-                    <Flag/>
-                    <Teams>
-                        <Username>Test</Username>
-                        <Username>Test</Username>
-                    </Teams>
-                </UpperCard>
-                <TextInput text = "Nom de l'équipe"/>
-            </Card>
+            {
+                lobby.teams.map((team, i) => {
+                    const teamIdx = i + 1
+                    const users = lobby.users.filter(u => u.team === teamIdx)
+
+                    return <Card key = {i}>
+                        <UpperCard>
+                            <Flag/>
+                            <Teams>
+                                { users[0] ? 
+                                <Username>{users[0].username}</Username> : 
+                                <JoinBtn callback = {e => {
+                                    dispatchLobby({ type: 'users', payload: { username:user.username, newTeam: teamIdx }})
+                                    modifyUser({ team: teamIdx})
+                                    }}/>}
+                                { users[1] ? 
+                                <Username>{users[1].username}</Username> : 
+                                <JoinBtn callback = {e => {
+                                    dispatchLobby({ type: 'users', payload: { username:user.username, newTeam: teamIdx }})
+                                    modifyUser({ team: teamIdx})
+                                    }}/>}
+                            </Teams>
+                        </UpperCard>
+                        { user.team === teamIdx ? 
+                        <TextInput 
+                        text = "Nom de l'équipe" 
+                        callback = {e => dispatchLobby({ type: 'teams', payload: { teamNb: teamIdx, name: e.target.value }})}/> : 
+                        <TeamName text = "Nom de l'équipe" name = {team.name}/> }
+                        </Card>
+                    })
+            }
         </Cards>
     </Container>
 }

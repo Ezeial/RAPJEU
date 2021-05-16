@@ -18,7 +18,7 @@ const Svg = styled.img`
 width: 40px;
 `
 
-const Button = () => <Container>
+const Button = ({callback}) => <Container onClick = {callback}>
         <Svg src = {ArrowSvg}/>
     </Container>
 

@@ -9,7 +9,7 @@ const Box = styled.div`
     border-radius: 8px;
 
     font-size: 1.2rem;
-    font-weight: 700;
+    font-weight: 800;
     color: white;
     min-width: 150px;
     margin: 8px;

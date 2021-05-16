@@ -29,9 +29,9 @@ const Box = styled.div`
 
     cursor: pointer;
     transition: all 1s ease;
-        &:hover {
-            background-size: 100%;
-        }
+    &:hover {
+        background-size: 100%;
+    }
 `
 
 const JoinBtn = ({ callback }) => <Box onClick = {callback}>REJOINDRE</Box>

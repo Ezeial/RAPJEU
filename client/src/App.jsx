@@ -1,6 +1,6 @@
 import Lobby from './Containers/Lobby'
 
-function App() {
+function App(props) {
   return (
     <>
       <Lobby></Lobby>

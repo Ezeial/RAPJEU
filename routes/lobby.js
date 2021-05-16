@@ -6,7 +6,7 @@ export default async (fastify, opts) => {
     fastify.get('/:id', async (req, reply) => {
         const { id } = req.params
         
-        return fastify.model.find({ roomId: id })
+        return fastify.model.findOne({ roomId: id })
     })
 
     fastify.get('/', async (req, reply) => fastify.model.find({}))
@@ -15,27 +15,24 @@ export default async (fastify, opts) => {
         const roomId = randomBytes(2).toString('hex')
         
         const { username } = req.body
-        const newLobby = new fastify.model({ roomId, users: [{ username, team: 0 }] })
-        
+        const newLobby = new fastify.model({ roomId, users: [{ username, team: 0 }], teams: [{ img: '', name: ''}, { img: '', name: ''}, { img: '', name: ''}, { img: '', name: ''}] })
+        const user = newLobby.users.find(user => user.username = username)
         try {   
             await newLobby.save()
-            return {
-                roomId: newLobby.roomId,
-                user: newLobby.users.find(user => user.username === username)
-            }
+            return { newLobby, user }
         } catch (err) {
             return err
         }
     })
 
     fastify.put('/:roomId', async (req, reply) => {
-        console.log('PUT')
         const { roomId } = req.params
         const { username } = req.body
 
         try {
-            const doc = await fastify.model.findOneAndUpdate({ roomId }, { $push: { users: { username, team: 0 } }}, { new: true })
-            return doc.users.find(user => user.username === username)
+            const newLobby = await fastify.model.findOneAndUpdate({ roomId }, { $push: { users: { username, team: 0 } }}, { new: true })
+            const user = newLobby.users.find(user => user.username = username)
+            return { newLobby, user }
         } catch (err) {
             return err
         }

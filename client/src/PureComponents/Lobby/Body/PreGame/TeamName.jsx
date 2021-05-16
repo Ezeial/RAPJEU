@@ -4,20 +4,19 @@ const Container = styled.div`
     display:flex;
     flex-direction: column;
     width: 100%;
-    
     @media (max-width: 1000px) {
         max-width: 150px;
         margin: 0;
       }
 `
 
-const Label = styled.div`
+const SmLabel = styled.div`
     font-weight: 600;
     font-size: 0.8rem;
     color: white;
 `
 
-const Input = styled.input`
+const Label = styled.div`
     font-size: 1.4rem;
     font-weight: 800;
     padding: 10px;
@@ -29,10 +28,10 @@ const Input = styled.input`
     text-align: center;
 `
 
-const TextInput = ({ text, callback }) => <Container>
-        <Label>{ text }:</Label>
-        <Input onChange = {callback} type = 'text'/>
+const TeamName = ({ text, name }) => <Container>
+        <SmLabel>{ text }:</SmLabel>
+        <Label>{ name || '...' }</Label>
     </Container>
 
 
-export default TextInput 
+export default TeamName 

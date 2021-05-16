@@ -1,11 +1,10 @@
 export default class LobbyService {
-
-    constructor (socket, db, roomId, userId) {
+    constructor (io, socket, db, roomId, userId) {
+        this.io = io
         this.socket = socket
         this.db = db
         this.roomId = roomId
         this.userId = userId
-
         this.socket.join(this.roomId)
 
         this.teamJoin = this.teamJoin.bind(this)
@@ -18,13 +17,12 @@ export default class LobbyService {
             const user = lobby.users.id(this.userId)
             user.team = index
             await lobby.save()
+            this.socket.to(this.roomId).emit('team:join', user, index)
+
+            console.log(`${user.username} has joined team ${index}`)
         } catch (err) {
             console.error(err)
         } 
-
-        this.socket.to(this.roomId).emit('team:join', user, index)
-
-        console.log(`${user.username} has joined team ${index}`)
     }
 
     async teamUpdate (property, index) {
