@@ -22,7 +22,7 @@ const Auth = () => {
             {action === 'join' && <TextInput text = 'Code' callback = {setCode}/>} 
             <Button callback = {e => {
                 authorizeUser(pseudo, code).then(res => {
-                    if (res) toast(res.error, {
+                    toast(res?.error, {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
