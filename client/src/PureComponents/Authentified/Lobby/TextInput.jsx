@@ -3,11 +3,8 @@ import styled from 'styled-components'
 const Container = styled.div`
     display:flex;
     flex-direction: column;
-    width: 100%;
-    
+    width: 320px;
     @media (max-width: 1000px) {
-        max-width: 150px;
-        margin: 0;
       }
 `
 
@@ -27,11 +24,14 @@ const Input = styled.input`
     outline: none;
     color: white;
     text-align: center;
+    &::placeholder {
+        color: white;
+    }
 `
 
-const TextInput = ({ text, callback }) => <Container>
+const TextInput = ({ text, placeholder, callback }) => <Container>
         <Label>{ text }:</Label>
-        <Input onChange = {callback} type = 'text'/>
+        <Input { ...{ placeholder }} onChange = {callback} type = 'text'/>
     </Container>
 
 

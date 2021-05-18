@@ -1,35 +1,53 @@
-import React, { useContext, useReducer } from 'react'
+import React, { useContext, useReducer, useEffect } from 'react'
+import { useUserStore } from './User'
 
 const GameContext = React.createContext({})
 
-const lobbyReducer = (state, action) => {
-    switch (action.type) {
-      case 'lobby':
-        return action.payload
-      case 'roomId':
-        return {...state, roomId: action.payload}
-      case 'users':
-        const users = state.users
-        const user = users.find(user => action.payload.username === user.username)
-        user.team = action.payload.newTeam  
-        return { ...state, users }
-      case 'teams':
-        const teams = state.teams
-        const team = teams[action.payload.teamNb - 1]
-        team.name = action.payload.name
-        console.log(teams)
-        return { ...state, teams }
-      default:
-        throw new Error()
-    } 
-  }
-
 const Provider = ({ roomId, children }) => {
-    const [lobby, dispatchLobby] = useReducer(lobbyReducer, {})
-    
-    console.log('from context', roomId)
+    const { user, modifyUser } = useUserStore()
+    const [lobby, dispatchLobby] = useReducer((state, action) => {
+      switch (action.type) {
+        case 'setLobby':
+          return action.payload
+        case 'setRoomId':
+          return {...state, roomId: action.payload}
+        case 'pushUser':
+          let userss = state.users
+          userss = [ ...userss, action.payload ]
+          return { ...state, users: userss}
+        case 'setUserTeam':
+          const users = state.users
+          const currentUser = users.find(u => u._id === action.payload.user._id)
+          currentUser.team = action.payload.team 
+          return { ...state, users }
+        case 'modifyTeam':
+          const teams = state.teams
+          teams[action.payload.team - 1] = { ...teams[action.payload.team - 1], ...action.payload.prop	}
+          return { ...state, teams }
+        default:
+          throw new Error()
+      } 
+    })
 
-    return <GameContext.Provider value = { { lobby } }>
+
+    useEffect(() => {
+      fetch(`http://127.0.0.1:3001/api/lobbys/${roomId}`, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: user.username })
+      })
+      .then(res => res.json())
+      .then(json => {
+        modifyUser({ _id: json.user._id })
+        dispatchLobby({ type: 'setLobby', payload: json.newLobby})
+      })
+      .catch(console.error)
+    }, [modifyUser, roomId, user.username])
+
+    return <GameContext.Provider value = { { lobby, dispatchLobby } }>
         { children }
     </GameContext.Provider>
 }
@@ -39,21 +57,3 @@ const useGameStore = () => useContext(GameContext)
 export default Provider
 
 export { useGameStore }
-
-    // const fetchLobby = (username, method = 'GET', id = '') => {
-    //     return fetch(`http://127.0.0.1:3001/api/lobbys/${id}`, {
-    //         method,
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json'
-    //           },
-    //         body: JSON.stringify({ username })
-    //     })
-    //     .then(res => res.json())
-    //     .then(json => {
-    //         setUser(json.user)
-    //         dispatchLobby({type: 'lobby', payload: json.newLobby})
-    //         return json
-    //     })
-    //     .catch(console.error)
-    // }

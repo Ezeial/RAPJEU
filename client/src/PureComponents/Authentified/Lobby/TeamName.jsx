@@ -3,10 +3,7 @@ import styled from 'styled-components'
 const Container = styled.div`
     display:flex;
     flex-direction: column;
-    width: 100%;
     @media (max-width: 1000px) {
-        max-width: 150px;
-        margin: 0;
       }
 `
 
@@ -17,6 +14,7 @@ const SmLabel = styled.div`
 `
 
 const Label = styled.div`
+    width: 100%;
     font-size: 1.4rem;
     font-weight: 800;
     padding: 10px;
@@ -26,11 +24,13 @@ const Label = styled.div`
     outline: none;
     color: white;
     text-align: center;
+    
+    width: 300px;
 `
 
-const TeamName = ({ text, name }) => <Container>
+const TeamName = ({ text, children }) => <Container>
         <SmLabel>{ text }:</SmLabel>
-        <Label>{ name || '...' }</Label>
+        <Label>{ children || '...' }</Label>
     </Container>
 
 

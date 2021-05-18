@@ -25,8 +25,8 @@ export default async (fastify, opts) => {
         const { username } = req.body
 
         try {
-            const newLobby = await fastify.model.findOneAndUpdate({ roomId }, { $push: { users: { username, team: 0 } }}, { new: true })
-            const user = newLobby.users.find(user => user.username = username)
+            const newLobby = await fastify.model.findOneAndUpdate({ roomId }, { $push: { users: { username, team: 0 } }}, { returnOriginal: false })
+            const user = newLobby.users.find(user => user.username === username)
             return { newLobby, user }
         } catch (err) {
             return err

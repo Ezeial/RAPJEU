@@ -11,7 +11,7 @@ const Box = styled.div`
       }
     `
 
-const Flag = ({ children }) => <Box> { children } </Box>
+const Flag = ({ children, callback }) => <Box onClick = {callback}> { children } </Box>
 
 
 export default Flag

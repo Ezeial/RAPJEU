@@ -4,7 +4,7 @@ import Home from '../Containers/Unauthentified/Home'
 import Auth from '../Containers/Unauthentified/Auth'
 
 import Container from '../PureComponents/Unauthentified/Container'
-import TopBar from '../PureComponents/Unauthentified/TopBar'
+import TopBar from '../PureComponents/TopBar'
 import Footer from '../PureComponents/Unauthentified/Footer'
 
 const Unauthentified = () => {
