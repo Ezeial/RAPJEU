@@ -5,14 +5,15 @@ const Box = styled.div`
     justify-content:center;
     align-items:center;
     padding: 15px;
-    background: rgba(0, 0, 0, 0.42); 
     flex-direction: column;
     border-radius: 15px;
 
     margin: 10px;
+    min-width: 300px;
+    width: 20%;
 `
 
-const Card = ({ children }) => <Box> { children } </Box>
+const Container = ({ children }) => <Box> { children } </Box>
 
 
-export default Card
+export default Container

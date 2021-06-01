@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useContext, useState, useMemo } from 'react'
 import { useHistory } from "react-router-dom"
 
 const UserContext = React.createContext({})
@@ -6,7 +6,7 @@ const UserContext = React.createContext({})
 const Provider = ({ children }) => {
     const [user, setUser] = useState({ authentified: false, username: '', _id: '', team: 0})
     const history = useHistory()
-
+    const memoizedUser = useMemo(() => user, [user])
     const memoizedModifyUser = useCallback((newProperty) => setUser(prev => ({...prev, ...newProperty})), [])
 
     const authorizeUser = (pseudo, roomId) => {
@@ -37,7 +37,7 @@ const Provider = ({ children }) => {
         .catch(err => ({error: err}))
     }
 
-    return <UserContext.Provider value = { { user, authorizeUser, modifyUser: memoizedModifyUser } }>
+    return <UserContext.Provider value = { { user: memoizedUser, authorizeUser, modifyUser: memoizedModifyUser } }>
         { children }
     </UserContext.Provider>
 }

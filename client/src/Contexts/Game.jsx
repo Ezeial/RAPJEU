@@ -12,9 +12,9 @@ const Provider = ({ roomId, children }) => {
         case 'setRoomId':
           return {...state, roomId: action.payload}
         case 'pushUser':
-          let userss = state.users
-          userss = [ ...userss, action.payload ]
-          return { ...state, users: userss}
+          let us = state.users
+          us = [ ...us, action.payload ]
+          return { ...state, users: us}
         case 'setUserTeam':
           const users = state.users
           const currentUser = users.find(u => u._id === action.payload.user._id)

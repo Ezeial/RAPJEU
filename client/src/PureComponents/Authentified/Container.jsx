@@ -8,7 +8,7 @@ const Box = styled.div`
     width: 100%;
     min-height: 100vh;
 
-    background: radial-gradient(75% 75% at 61.53% 50%, #AD50D2 3.12%, #62008A 100%);
+    background: linear-gradient(243.18deg, #FC5943 3.13%, #62008A 100%);
 `
 
 const Container = ({ children }) => <Box> { children } </Box>

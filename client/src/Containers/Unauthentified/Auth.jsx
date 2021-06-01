@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom'
 import useInput from '../../Hooks/useInput'
 import { useUserStore } from '../../Contexts/User'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify'
 
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css'
 
 import Container from '../../PureComponents/Unauthentified/Auth/Container'
 import Box from '../../PureComponents/Unauthentified/Auth/Box'

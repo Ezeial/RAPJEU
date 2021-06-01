@@ -14,16 +14,18 @@ const Label = styled.div`
 `
 
 const Input = styled.input`
-    font-size: 3rem;
-    font-weight: 600;
+    font-size: 2.5rem;
+    font-weight: 700;
     
     background: #FFFFFF42;
     border: none;
     border-radius:13px; 
     outline: none;
-    color: #3eeb98;
+    color: black;
     padding: 7px 15px;
     max-width: 300px;
+
+    text-align: center;
 `
 
 const TextInput = ({ text, callback }) => <Container>

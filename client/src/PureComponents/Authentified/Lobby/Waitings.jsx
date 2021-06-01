@@ -3,9 +3,9 @@ import styled from 'styled-components'
 const Box = styled.div`
     display: flex;
     align-items: center;
-    
-    width: 100%;
-    height: 60px;
+    flex-wrap: wrap;
+    width: 80%;
+    min-height: 60px;
 `
 
 const Waitings = ({ children }) => <Box> { children } </Box>

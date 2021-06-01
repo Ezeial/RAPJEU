@@ -8,8 +8,8 @@ const Box = styled.div`
     width: 100%;
 
     padding: 5px 0;
+    background: #FFFFFF40;
 
-    background: linear-gradient(90.98deg, #3EEB98 0%, #AD50D2 89.82%);
 
     
     color: white;

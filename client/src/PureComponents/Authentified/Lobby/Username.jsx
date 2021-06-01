@@ -10,15 +10,11 @@ const Box = styled.div`
 
   background: rgba(0, 0, 0, 0.50);
   border-radius: 8px;
-  font-size: 1.2rem;
+  font-size: 20px;
   font-weight: 800;
   color: white;
 
-  width: 150px;
-
-  @media (max-width: 1000px) {
-    width: 70px;
-  }
+  min-width: 150px;
 `
 
 const Username = ({ children }) => <Box> { children } </Box>

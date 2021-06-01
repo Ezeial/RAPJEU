@@ -6,16 +6,17 @@ const Container = styled.div`
     justify-content:space-around;
     flex-direction: column; 
     padding: 20px;
+    margin: 10px;
 
-    background: #0000006B;
+    border: solid 5px white;
     border-radius: 12px;
 
-    box-shadow: 0 1px 2px rgba(0,0,0,0.07), 
-    0 2px 4px rgba(0,0,0,0.07), 
-    0 4px 8px rgba(0,0,0,0.07), 
-    0 8px 16px rgba(0,0,0,0.07),
-    0 16px 32px rgba(0,0,0,0.07), 
-    0 32px 64px rgba(0,0,0,0.07);
+    // box-shadow: 0 1px 2px rgba(0,0,0,0.07), 
+    // 0 2px 4px rgba(0,0,0,0.07), 
+    // 0 4px 8px rgba(0,0,0,0.07), 
+    // 0 8px 16px rgba(0,0,0,0.07),
+    // 0 16px 32px rgba(0,0,0,0.07), 
+    // 0 32px 64px rgba(0,0,0,0.07);
 `
 
 const Box = ({ children }) => <Container>{ children }</Container>

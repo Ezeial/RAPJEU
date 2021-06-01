@@ -1,8 +1,7 @@
 import styled from 'styled-components'
-import ArrowSvg from '../../../assets/arrow.svg'
 
 const Container = styled.div`
-    background: #0000006B;
+    background: #FFFFFF40;
     border-radius: 11px;
     padding: 15px;
 
@@ -10,16 +9,14 @@ const Container = styled.div`
     justify-content:center;
     align-items:center;
     margin: 5px;
-
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 900;
     cursor: pointer;
 `
 
-const Svg = styled.img`
-width: 40px;
-`
-
 const Button = ({callback}) => <Container onClick = {callback}>
-        <Svg src = {ArrowSvg}/>
+        ENTER
     </Container>
 
 

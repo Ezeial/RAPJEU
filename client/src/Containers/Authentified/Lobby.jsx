@@ -6,19 +6,27 @@ import { useGameStore } from '../../Contexts/Game'
 import useSocket from '../../Hooks/useSocket'
 
 import Container from '../../PureComponents/Authentified/Lobby/Container'
-import LeftContainer from '../../PureComponents/Authentified/Lobby/LeftContainer'
 import Waitings from '../../PureComponents/Authentified/Lobby/Waitings'
-import Username from '../../PureComponents/Authentified/Lobby/Username'
-import HorizontalBar from '../../PureComponents/Authentified/Lobby/HorizontalBar'
 import Cards from '../../PureComponents/Authentified/Lobby/Cards'
-import Card from '../../PureComponents/Authentified/Lobby/Card'
-import UpperCard from '../../PureComponents/Authentified/Lobby/UpperCard'
-import Flag from '../../PureComponents/Authentified/Lobby/Flag'
-import Teams from '../../PureComponents/Authentified/Lobby/Teams'
-import TextInput from '../../PureComponents/Authentified/Lobby/TextInput'
-import JoinBtn from '../../PureComponents/Authentified/Lobby/JoinBtn'
-import TeamName from '../../PureComponents/Authentified/Lobby/TeamName'
-import PlayButton from '../../PureComponents/Authentified/Lobby/PlayButton'
+import Username from '../../PureComponents/Authentified/Lobby/Username'
+
+import Card from '../../PureComponents/Authentified/Lobby/Card/Container'
+import TeamLabel from '../../PureComponents/Authentified/Lobby/Card/TeamLabel'
+import UnderBox from '../../PureComponents/Authentified/Lobby/Card/UnderBox'
+import Flag from '../../PureComponents/Authentified/Lobby/Card/Flag'
+import Pseudo from '../../PureComponents/Authentified/Lobby/Card/Username'
+import TextInput from '../../PureComponents/Authentified/Lobby/Card/TextInput'
+import JoinBtn from '../../PureComponents/Authentified/Lobby/Card/JoinBtn'
+
+const validateLobby = (lobby) => {
+    const usersNb = lobby.users.length      
+
+    if (usersNb < 2 || usersNb > 8) return { validated: false, error: 'You can only play with 2 to 8 players'}
+    
+    if (lobby.users.find(user => user.team === 0)) return { validated: false, error: "There is still player that didn't choose a team"}
+
+    return { validated: true }
+}
 
 const Lobby = () => {
     // Hooks
@@ -47,13 +55,41 @@ const Lobby = () => {
     if (!lobby) return <>loading</>
 
     return <Container>
-    <LeftContainer>
         <Waitings>    
             { lobby.users.filter(user => user.team === 0).map((waitingUser, index) => <Username key = {index * 2}>{waitingUser.username}</Username>) }
         </Waitings>
-        <HorizontalBar/>
         <Cards>
             {
+                lobby.teams.map((team, index) => {
+                    const teamNb = index + 1
+                    const usersInTeam = lobby.users.filter(user => user.team === teamNb)
+                    const isUserTeam = user.team === teamNb
+
+                    return <Card>
+                        { isUserTeam ? <TextInput 
+                        placeholder = {team.name}
+                        type = 'text' 
+                        onChange = { e => { 
+                            socket.emit('team:update', { name: e.target.value }, teamNb)
+                            handleTeamUpdate({ name: e.target.value }, teamNb)
+                        }}/> : <TeamLabel>{team.name}</TeamLabel>}
+                        <UnderBox {...{isUserTeam}}>
+                            <Flag/>
+                            {
+                                [0, 1].map(i => usersInTeam[i] ? 
+                                    <Pseudo>{ usersInTeam[i].username }</Pseudo> :
+                                    <JoinBtn onClick = { e => { 
+                                        socket.emit('team:join', teamNb) 
+                                        handleTeamJoin(user, teamNb)
+                                        modifyUser({ team: teamNb }) 
+                                    }}>REJOINDRE</JoinBtn>
+                                )
+                            }
+                        </UnderBox>
+                    </Card>
+                })
+            }
+            {/* {
                 lobby.teams.map((team, index) => {
                     const teamNb = index + 1
                     const users = lobby.users.filter(user => user.team === teamNb)
@@ -87,10 +123,27 @@ const Lobby = () => {
                         }
                     </Card>
                 })
+            } */}
+            {
+
             }
         </Cards>
-    </LeftContainer>
-    <PlayButton callback = {e => console.log('PLAY')}>LET'S GO</PlayButton>
+        {/* <PlayButton callback = {e => {
+            const { validated, error } = validateLobby(lobby)
+            
+            if (!validated) return toast(error, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                type: 'error'
+            })}
+            
+            // REDIRECT TO GAMES
+            }>
+        LET'S GO
+        </PlayButton>
+        <ToastContainer/> */}
     </Container>
 }
 
