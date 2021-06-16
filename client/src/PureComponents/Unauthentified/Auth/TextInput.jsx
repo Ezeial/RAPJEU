@@ -4,7 +4,7 @@ const Container = styled.div`
     display:flex;
     align-items:center;
     flex-direction: column;
-    margin: 10px;
+    margin: 15px;
 `
 
 const Label = styled.div`
@@ -23,7 +23,8 @@ const Input = styled.input`
     outline: none;
     color: black;
     padding: 7px 15px;
-    max-width: 300px;
+    min-width: 10rem;
+    width: 70%;
 
     text-align: center;
 `

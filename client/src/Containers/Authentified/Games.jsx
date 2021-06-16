@@ -1,6 +1,6 @@
 import { useGameStore } from '../../Contexts/Game'
 import Feats from './Games/Feats'
-
+import TeamsBox from '../../PureComponents/Authentified/Games/TeamsBox'
 
 const Games = () => {
 
@@ -8,6 +8,7 @@ const Games = () => {
 
     return <>
         <Feats/>
+        <TeamsBox/>
     </>
 }
 

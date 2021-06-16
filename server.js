@@ -24,12 +24,12 @@ fastify.register(lobbySocket)
 // START SERVER
 
 const start = async () => {
-    try {
-      const adress = await fastify.listen(3001)
-      console.log(`server listening on: ${adress}`)
-    } catch (err) {
-      console.error(err)
-      process.exit(1)
-    }
+  try {
+    const adress = await fastify.listen(3001)
+    console.log(`server listening on: ${adress}`)
+  } catch (err) {
+    console.error(err)
+    process.exit(1)
   }
+}
 start()

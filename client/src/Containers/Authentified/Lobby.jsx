@@ -13,7 +13,7 @@ import Username from '../../PureComponents/Authentified/Lobby/Username'
 import Card from '../../PureComponents/Authentified/Lobby/Card/Container'
 import TeamLabel from '../../PureComponents/Authentified/Lobby/Card/TeamLabel'
 import UnderBox from '../../PureComponents/Authentified/Lobby/Card/UnderBox'
-import Flag from '../../PureComponents/Authentified/Lobby/Card/Flag'
+import Flag from '../../PureComponents/Authentified/Flag'
 import Pseudo from '../../PureComponents/Authentified/Lobby/Card/Username'
 import TextInput from '../../PureComponents/Authentified/Lobby/Card/TextInput'
 import JoinBtn from '../../PureComponents/Authentified/Lobby/Card/JoinBtn'
@@ -29,7 +29,6 @@ const validateLobby = (lobby) => {
 }
 
 const Lobby = () => {
-    // Hooks
     const { user, modifyUser } = useUserStore()
     const { lobby, dispatchLobby } = useGameStore()
     const memoizedQuery = useMemo(() => ({ roomId: lobby?.roomId, userId: user._id }), [lobby?.roomId, user._id])
@@ -50,8 +49,6 @@ const Lobby = () => {
         }
     }, [socket, dispatchLobby, handleTeamJoin, handleTeamUpdate])
 
-    // UI
-
     if (!lobby) return <>loading</>
 
     return <Container>
@@ -66,13 +63,15 @@ const Lobby = () => {
                     const isUserTeam = user.team === teamNb
 
                     return <Card>
-                        { isUserTeam ? <TextInput 
-                        placeholder = {team.name}
-                        type = 'text' 
-                        onChange = { e => { 
-                            socket.emit('team:update', { name: e.target.value }, teamNb)
-                            handleTeamUpdate({ name: e.target.value }, teamNb)
-                        }}/> : <TeamLabel>{team.name}</TeamLabel>}
+                        { 
+                            isUserTeam ? <TextInput 
+                            placeholder = {team.name}
+                            type = 'text' 
+                            onChange = { e => { 
+                                socket.emit('team:update', { name: e.target.value }, teamNb)
+                                handleTeamUpdate({ name: e.target.value }, teamNb)
+                            }}/> : <TeamLabel>{team.name}</TeamLabel>
+                        }
                         <UnderBox {...{isUserTeam}}>
                             <Flag/>
                             {
@@ -88,44 +87,6 @@ const Lobby = () => {
                         </UnderBox>
                     </Card>
                 })
-            }
-            {/* {
-                lobby.teams.map((team, index) => {
-                    const teamNb = index + 1
-                    const users = lobby.users.filter(user => user.team === teamNb)
-
-                    return <Card key = {index * 2 + 1}>
-                        <UpperCard>
-                            <Flag callback = {e => {
-                                // TODO : REAL SYSTEM OF IMG CHOICES
-                                socket.emit('team:update', { img: 'NEWIMAGE' }, index)
-                                handleTeamUpdate({ img: 'NEWIMAGE' }, teamNb)
-                            }}/>
-                            <Teams>
-                                { 
-                                    [0, 1].map(idx => users[idx] ? 
-                                    <Username key = { 57 * idx}>{users[idx].username}</Username> : 
-                                    <JoinBtn key = { 58 * idx} callback = { e => { 
-                                        socket.emit('team:join', teamNb) 
-                                        handleTeamJoin(user, teamNb)
-                                        modifyUser({ team: teamNb }) 
-                                    }}/>) 
-                                }
-                            </Teams>
-                        </UpperCard>
-                        { 
-                            user.team === teamNb ? 
-                            <TextInput placeholder = {team.name} text = "nom de l'équipe" callback = { e => { 
-                                socket.emit('team:update', { name: e.target.value }, teamNb)
-                                handleTeamUpdate({ name: e.target.value }, teamNb)
-                            }}/> : 
-                            <TeamName text = "nom de l'équipe">{team.name}</TeamName>
-                        }
-                    </Card>
-                })
-            } */}
-            {
-
             }
         </Cards>
         {/* <PlayButton callback = {e => {

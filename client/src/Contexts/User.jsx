@@ -4,11 +4,17 @@ import { useHistory } from "react-router-dom"
 const UserContext = React.createContext({})
 
 const Provider = ({ children }) => {
-    const [user, setUser] = useState({ authentified: false, username: '', _id: '', team: 0})
+    const [user, setUser] = useState({ authentified: true, username: '', _id: '', team: 0})
     const history = useHistory()
     const memoizedUser = useMemo(() => user, [user])
     const memoizedModifyUser = useCallback((newProperty) => setUser(prev => ({...prev, ...newProperty})), [])
 
+
+    // If a roomId is gave, it mean that user want to join, otherwise that user want to create a room
+    // So if he wants to join we fetch the lobby and authentify the user if it exist otherwise it throw an error
+    // And if he wants to create a room we generate a new id and make sure it doesnt exist then we create the lobby and authentify the user
+    // then we redirect him to lobby, where data will be fetch and socket connect
+    
     const authorizeUser = (pseudo, roomId) => {
         const randomId = Math.random().toString(16).substring(11)
 

@@ -22,17 +22,16 @@ const Box = styled.div`
     position: relative;
 
     @media (max-width: 1000px) {
-        min-width: 300px;
-      }
-
+        min-width: 29rem;
+    }
 `
 
 const BigLabel = styled.div`
     color: white;
-    font-size: 3.5rem;
+    font-size: 4.5rem;
     font-weight: 700;
     z-index: inherit;
-    padding: 25px;
+    padding: 2rem;
 `
 
 const Label = styled.div`

@@ -4,7 +4,7 @@ const Box = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-
+    text-align: center;
     width: 100%;
 
     color: white;
@@ -14,7 +14,7 @@ const Box = styled.div`
 `
 
 
-const TopBar = () => <Box>RAP JEU</Box>
+const TopBar = () => <Box>RAP CUP</Box>
 
 
 export default TopBar
