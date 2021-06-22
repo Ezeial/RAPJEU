@@ -13,15 +13,12 @@ export default class Game {
     }
 
     shuffleNewRapper() {
-        const getRandomNumber = (max) => {
-            return Math.floor(Math.random() * max)
-        }
+        const getRandomNumber = max => Math.floor(Math.random() * max)
 
         this.current = config.rappers[getRandomNumber(config.rappers.length)]
     }
 
     startGame() {
-        this.score = 0
         this.gameState = gameState.PREBUZZ
         this.round = new Round(config.roundNb)
         this.teams.forEach(team => team.gameMode = gameMode.WAIT)
@@ -75,6 +72,7 @@ export default class Game {
             console.log(`team ${this.vote.team.name} won this round, new score for them : ${this.vote.team.score}`)
             return this.nextRound()
         }
+        
         this.teams.forEach(t => t.name === this.vote.team.name ? t.setGamemode(gameMode.PROPOSE) : t.setGamemode(gameMode.WAIT))
         console.log(`now its team ${this.vote.team.name} to guess a new feat with ${this.current}`)
     }

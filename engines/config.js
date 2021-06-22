@@ -3,7 +3,8 @@ export default Object.freeze({
     maxPlayerInTeam: 2,
     roundNb: 5,
     scorePerRound: 15,
-    rappers: ['JUL', 'FREEZE CORLEONE', 'LUV RESVAL']
+    rappers: ['JUL', 'FREEZE CORLEONE', 'LUV RESVAL'],
+    maxPlayerInLobby: 4
 })
 
 export const gameMode = Object.freeze({
