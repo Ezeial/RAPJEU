@@ -1,5 +1,6 @@
-export default class User {
+export default class Player {
     constructor(name) {
         this.name = name
-    }   
+    }
 }
+

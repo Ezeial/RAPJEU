@@ -1,12 +1,13 @@
 export default class Vote {
-    constructor(length) {
-        this.length = length
-        this.votes = []
+    votes = []
+    
+    constructor(team) {
+        this.team = team
+        this.length = team.players.length
     }
     
-    vote(isPros) {
-        if (this.isVoteFull()) return console.log('max vote has been reached')
-        this.votes.push(isPros)
+    add(vote) {
+        this.votes.push(vote)
     }
 
     getResult() {
@@ -17,7 +18,7 @@ export default class Vote {
         return result > 0
     }
 
-    isVoteFull() {
+    isFull() {
         return this.votes.length >= this.length
     }
 } 
